@@ -5,15 +5,15 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637506417192281577
-    m_Hash: 2677021523
+      ticks: 637506414424006935
+    m_Hash: 2838798205
   m_LockFileStatus:
     m_FilePath: C:/Users/GameDesign_Office/Desktop/Whale_of_a_Time/Whale_of_a_time/Whale_ofA_Time/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 637506429621604186
+      ticks: 637506414603586866
     m_Hash: 3198298308
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
@@ -947,11 +947,9 @@ m_PackageAssets:
         - 1.1.19
         - 1.1.20
         - 1.1.22
-        - 1.1.24
         compatible:
         - 1.1.22
-        - 1.1.24
-        verified: 1.1.24
+        verified: 1.1.22
       dependencies:
       - name: com.unity.ext.nunit
         version: 1.0.6
