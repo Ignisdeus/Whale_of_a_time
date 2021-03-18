@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Whale_Movement : MonoBehaviour
 {
+    Vector2 startingPos; 
     void Start()
     {
-        
+        startingPos = transform.position; // storing my starting posision   
     }
 
     public float speed = 5f; // Whale movement speed 
@@ -34,10 +35,11 @@ public class Whale_Movement : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other){
+    void OnCollisionEnter2D(Collision2D other){
         // if I collide with the ball display debug. 
         if(other.gameObject.tag =="Ball"){
-            Debug.Log("Hit the Ball");
+            Destroy(other.gameObject);
+            transform.position = startingPos; // reset my posision  
         }
     }
     // bool for checking if this game object is grounded 
