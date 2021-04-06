@@ -82,6 +82,7 @@ public class Whale_Movement : MonoBehaviour
         score += 100;// adds 100 to the score
         scoreText.text = score.ToString(); // display score to screen 
     }
+    public GameObject gameOverScreen; 
     void UpdateLives()
     {
         for(int i = 0; i < livesObjects.Length; i++)
@@ -94,6 +95,13 @@ public class Whale_Movement : MonoBehaviour
             {
                 livesObjects[i ].SetActive(false);
             }
+        }
+
+        if(lives < 0)
+        {
+            gameOverScreen.SetActive(true);
+            //Pass in info for homework - 
+            Destroy(GetComponent<Whale_Movement>());
         }
     }
 }
