@@ -9,8 +9,11 @@ public class Whale_Movement : MonoBehaviour
     int lives = 2; // number of remaning Lives
     public GameObject[] livesObjects; // a list of game objects 
     float scaleOnX; // to hold the x scale value
+    private AudioSource audioSourse;
+    public AudioClip jumpAudio, hitAudio; 
     void Start()
     {
+        audioSourse = gameObject.AddComponent<AudioSource>();// will add a AudioSource component to the game object
         scaleOnX = transform.localScale.x; 
         startingPos = transform.position; // storing my starting posision
         scoreText.text = score.ToString(); // display score to screen
@@ -44,6 +47,7 @@ public class Whale_Movement : MonoBehaviour
         }
         // if I hit the jump key and I am grounded jump.
         if(Input.GetKeyDown(jump) && grounded == true){
+            audioSourse.PlayOneShot(jumpAudio, 0.7f);
             grounded = false; 
             GetComponent<Rigidbody2D>().AddForce(Vector2.up * jumpForce);
         }
@@ -52,12 +56,36 @@ public class Whale_Movement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other){
         // if I collide with the ball display debug. 
         if(other.gameObject.tag =="Ball"){
+            audioSourse.PlayOneShot(hitAudio, 0.7f);
+            StartCoroutine(WhaleFlash());
             Destroy(other.gameObject);
             lives--; // reduce lives by one
             UpdateLives();
             transform.position = startingPos; // reset my posision  
         }
     }
+    [Range(0.01f, 1f)]
+    public float waitTimer = 0.2f;
+    public GameObject whaleImage;
+    public int iterations = 3; 
+    IEnumerator WhaleFlash()
+    {
+        for(int i = 0; i < iterations; i++) {
+
+            if(i % 2 == 0)
+            {
+                whaleImage.SetActive(true);
+            }
+            else
+            {
+                whaleImage.SetActive(false);
+            }
+            yield return new WaitForSeconds(waitTimer);
+        }
+    }
+
+
+
     // bool for checking if this game object is grounded 
     public bool grounded = false; 
     void OnTriggerStay2D(Collider2D other){
@@ -82,7 +110,8 @@ public class Whale_Movement : MonoBehaviour
         score += 100;// adds 100 to the score
         scoreText.text = score.ToString(); // display score to screen 
     }
-    public GameObject gameOverScreen; 
+    public GameObject gameOverScreen;
+    public Text endScore; 
     void UpdateLives()
     {
         for(int i = 0; i < livesObjects.Length; i++)
@@ -100,7 +129,7 @@ public class Whale_Movement : MonoBehaviour
         if(lives < 0)
         {
             gameOverScreen.SetActive(true);
-            //Pass in info for homework - 
+            endScore.text = score.ToString();  
             Destroy(GetComponent<Whale_Movement>());
         }
     }

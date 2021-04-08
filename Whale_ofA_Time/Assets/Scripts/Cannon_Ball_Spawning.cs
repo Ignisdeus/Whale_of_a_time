@@ -13,9 +13,11 @@ public class Cannon_Ball_Spawning : MonoBehaviour
     public GameObject cannonBall;
     public float force;
     [Range(2f, 15f)]
-    public float spawingMax; 
+    public float spawingMax;
+    public Animator anim; 
     IEnumerator CannonBallSpawning()
     {
+        anim.SetTrigger("Bang");
         GameObject ball = Instantiate(cannonBall, transform.position, Quaternion.identity); // create the cannon ball 
         ball.GetComponent<Rigidbody2D>().AddForce(Vector2.right * force); // add force to the cannon ball
         yield return new WaitForSeconds(Random.Range(1f, spawingMax)); // wait for range of time 
