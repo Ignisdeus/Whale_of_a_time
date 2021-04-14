@@ -53,10 +53,12 @@ public class Whale_Movement : MonoBehaviour
         }
     }
 
+    public GameObject bubbles; 
     void OnCollisionEnter2D(Collision2D other){
         // if I collide with the ball display debug. 
         if(other.gameObject.tag =="Ball"){
             audioSourse.PlayOneShot(hitAudio, 0.7f);
+            Instantiate(bubbles, transform.position, Quaternion.identity);
             StartCoroutine(WhaleFlash());
             Destroy(other.gameObject);
             lives--; // reduce lives by one
@@ -103,7 +105,7 @@ public class Whale_Movement : MonoBehaviour
             AddScore();
         }
     }
-    int score = 0;
+    public int score = 0;
     public Text scoreText; 
     void AddScore()
     {
@@ -111,7 +113,8 @@ public class Whale_Movement : MonoBehaviour
         scoreText.text = score.ToString(); // display score to screen 
     }
     public GameObject gameOverScreen;
-    public Text endScore; 
+    public Text endScore;
+    public GameObject GM; 
     void UpdateLives()
     {
         for(int i = 0; i < livesObjects.Length; i++)
@@ -129,7 +132,9 @@ public class Whale_Movement : MonoBehaviour
         if(lives < 0)
         {
             gameOverScreen.SetActive(true);
-            endScore.text = score.ToString();  
+            endScore.text = score.ToString();
+            GM.GetComponent<HighScore>().currentScore = score;
+            GM.GetComponent<HighScore>().HighScoreCheck(); 
             Destroy(GetComponent<Whale_Movement>());
         }
     }
